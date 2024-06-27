@@ -17,6 +17,10 @@ and install all the required packages.
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
+### `npm run server`
+
+Runs the apps server on port 5000.\
+Open [http://localhost:5000/bookings](http://localhost:5000/bookings) to view it in the browser.
 
 ## Git
 
