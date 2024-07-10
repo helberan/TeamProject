@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/physio-react/static/css/main.a6cc66e4.css",
-    "main.js": "/physio-react/static/js/main.55f0d868.js",
-    "static/media/eliska.png": "/physio-react/static/media/eliska.21a0a4278f1994629975.png",
-    "static/media/profile4.png": "/physio-react/static/media/profile4.767dd63e6ca8e4aed8d6.png",
-    "static/media/profile1.png": "/physio-react/static/media/profile1.71acc65ef65285dd46f7.png",
-    "static/media/profile2.png": "/physio-react/static/media/profile2.2758a002a5bc69c1c023.png",
-    "static/media/helenka.jpg": "/physio-react/static/media/helenka.a2d8c8eddd1863561f2c.jpg",
-    "static/media/background.png": "/physio-react/static/media/background.d185591cafa84c168602.png",
-    "index.html": "/physio-react/index.html",
-    "main.a6cc66e4.css.map": "/physio-react/static/css/main.a6cc66e4.css.map",
-    "main.55f0d868.js.map": "/physio-react/static/js/main.55f0d868.js.map"
+    "main.css": "/team-project/static/css/main.6df73797.css",
+    "main.js": "/team-project/static/js/main.da84d18c.js",
+    "static/media/eliska.png": "/team-project/static/media/eliska.21a0a4278f1994629975.png",
+    "static/media/profile4.png": "/team-project/static/media/profile4.767dd63e6ca8e4aed8d6.png",
+    "static/media/profile1.png": "/team-project/static/media/profile1.71acc65ef65285dd46f7.png",
+    "static/media/profile2.png": "/team-project/static/media/profile2.2758a002a5bc69c1c023.png",
+    "static/media/helenka.jpg": "/team-project/static/media/helenka.a2d8c8eddd1863561f2c.jpg",
+    "static/media/background.png": "/team-project/static/media/background.d185591cafa84c168602.png",
+    "index.html": "/team-project/index.html",
+    "main.6df73797.css.map": "/team-project/static/css/main.6df73797.css.map",
+    "main.da84d18c.js.map": "/team-project/static/js/main.da84d18c.js.map"
   },
   "entrypoints": [
-    "static/css/main.a6cc66e4.css",
-    "static/js/main.55f0d868.js"
+    "static/css/main.6df73797.css",
+    "static/js/main.da84d18c.js"
   ]
 }
