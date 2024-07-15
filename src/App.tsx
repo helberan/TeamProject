@@ -7,8 +7,9 @@ import { Services } from './pages/services/Services';
 import { Contact } from './pages/contact/Contact';
 import { LandingPage } from './pages/landing-page/LandingPage';
 import { Header } from './pages/header/Header';
-import { BookingForm } from './pages/booking-form/BookingForm';
+//import { BookingForm } from './pages/booking-form/BookingForm';
 import { Gdpr } from './pages/gdpr/Gdpr';
+import { BookingFormWrapper } from './pages/booking-form/BookingFormWrapper';
 
 function App() {
   return (
@@ -21,7 +22,10 @@ function App() {
           <Route path='/team-project/prices' element={<Prices />} />
           <Route path='/team-project/services' element={<Services />} />
           <Route path='/team-project/contact' element={<Contact />} />
-          <Route path='/team-project/bookingform' element={<BookingForm />} />
+          <Route
+            path='/team-project/bookingform'
+            element={<BookingFormWrapper />}
+          />
           <Route path='/team-project/gdpr' element={<Gdpr />} />
         </Routes>
       </div>
