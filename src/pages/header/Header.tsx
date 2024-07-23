@@ -18,18 +18,21 @@ export const Header = () => {
               <Link
                 to='/team-project/services'
                 style={{ textDecoration: 'none' }}
+                className='nav-link'
               >
                 Naše služby
               </Link>
               <Link
                 to='/team-project/aboutus'
                 style={{ textDecoration: 'none' }}
+                className='nav-link'
               >
                 O nás
               </Link>
               <Link
                 to='/team-project/prices'
                 style={{ textDecoration: 'none' }}
+                className='nav-link'
               >
                 Ceník
               </Link>
@@ -37,6 +40,7 @@ export const Header = () => {
               <Link
                 to='/team-project/contact'
                 style={{ textDecoration: 'none' }}
+                className='nav-link'
               >
                 Kontakt
               </Link>
