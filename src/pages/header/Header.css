@@ -16,6 +16,7 @@
   font-size: 18px;
   font-weight: 500;
   line-height: 28px;
+  padding-right: 10px;
 }
 
 .nav-link {
@@ -39,4 +40,32 @@
 }
 .bookingform-btn:hover {
   color: var(--heading-color);
+}
+
+@media (max-width: 991.98px) {
+  /* Bootstrap breakpoint for lg */
+  .navbar-collapse.show .navlinks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-right: 0 !important;
+  }
+
+  .navbar-collapse.show .nav-link {
+    margin-right: 0;
+    padding: 10px 0;
+  }
+
+  .navbar-collapse.show .booking-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .navbar-collapse.show .bookingform-btn {
+    margin-top: 15px;
+  }
+  .navbar-collapse {
+    transition: none !important; /* Disable collapse transition to avoid flicker */
+  }
 }
