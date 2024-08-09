@@ -92,6 +92,7 @@ export const BookingForm = () => {
   };
 
   const handleDurationSelection = (duration: number) => {
+    //debugger;
     if (isEntranceExam && duration !== 60) {
       return;
     }
@@ -135,6 +136,7 @@ export const BookingForm = () => {
       ...prevData,
       duration: duration,
     }));
+    setSelectedDuration(duration);
     setDurationError(false);
   };
 
@@ -154,25 +156,27 @@ export const BookingForm = () => {
 
   const checkAvailabilityAndSubmit = async () => {
     try {
-      //localStorage.getItem()
-
       let checkedTelephone = inputData.telephone.trim().replace(/\s+/g, '');
       let checkedEmail = isValidEmail(inputData.email.trim());
 
+      //změnit id + podmínka - když je localStorage prázdné, bude id automaticky např. 0
+      let id = 0;
+      /*if (localStorage.getItem('0') === undefined) {
+        id += 1;
+      } else () */
+
       //ověřit zobrazování errorů
-      if (
-        isNaN(parseInt(checkedTelephone)) ||
-        !(checkedTelephone.length === 9)
-      ) {
-        setTelephoneError(true);
-        setEmailError(false);
-      } else if (!checkedEmail) {
-        setEmailError(true);
-        setTelephoneError(false);
-      } else {
+
+      const isTelephoneValid =
+        !isNaN(parseInt(checkedTelephone)) && checkedTelephone.length === 9;
+      const isEmailValid = checkedEmail;
+
+      setTelephoneError(!isTelephoneValid);
+      setEmailError(!isEmailValid);
+
+      if (isTelephoneValid && isEmailValid) {
         const formattedData = {
-          //změnit id + podmínka - když je localStorage prázdné, bude id automaticky např. 0
-          id: 0,
+          id: id,
           name: inputData.name.trim(),
           surname: inputData.surname.trim(),
           email: inputData.email.trim(),
@@ -198,7 +202,7 @@ export const BookingForm = () => {
         try {
           if (checkedInputData) {
             //změnit na uložení do localStorage
-            localStorage.setItem('booking1', JSON.stringify(checkedInputData));
+            localStorage.setItem('booking2', JSON.stringify(checkedInputData));
             setShowModal(true);
             setFormSubmitted(true);
           }
@@ -217,6 +221,7 @@ export const BookingForm = () => {
             time: '',
             duration: null,
           });
+          setSelectedDuration(null);
           setTelephoneError(false);
           setEmailError(false);
         }
@@ -228,14 +233,21 @@ export const BookingForm = () => {
 
   useEffect(() => {
     const booking1 = localStorage.getItem('booking1');
+    const booking2 = localStorage.getItem('booking2');
 
     if (booking1) {
       // Parse the JSON string back to an object
-      const retrievedUser = JSON.parse(booking1);
+      const submittedBooking1 = JSON.parse(booking1);
 
-      console.log(retrievedUser);
+      console.log('Booking submitted: ', submittedBooking1);
     }
-  }, []);
+    if (booking2) {
+      // Parse the JSON string back to an object
+      const submittedBooking2 = JSON.parse(booking2);
+
+      console.log('Booking submitted: ', submittedBooking2);
+    }
+  }, [localStorage]);
 
   return (
     <Container className='mt-5 form-container'>
