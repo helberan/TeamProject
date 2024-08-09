@@ -59,18 +59,14 @@
 .custom-duration-button:focus,
 .custom-duration-button:active,
 .custom-duration-button:hover,
-.custom-duration-button
-.custom-duration-button.selected {
-  background-color: #1e0e62; /* Change to your preferred active background color */
-  color: #ffffff; /* Active text color */
-  border-color: #1e0e62; /* Active border color */
-}
-
-.custom-duration-button:disabled {
+.custom-duration-button .custom-duration-button:disabled {
   background-color: #f0f0f0; /* Disabled background color */
   color: #a1a1b0; /* Disabled text color */
   border-color: #a1a1b0; /* Disabled border color */
 }
 
-
-
+.custom-duration-button.selected {
+  background-color: #1e0e62; /* Change to your preferred active background color */
+  color: #ffffff; /* Active text color */
+  border-color: #1e0e62; /* Active border color */
+}

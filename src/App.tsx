@@ -7,7 +7,7 @@ import { Services } from './pages/services/Services';
 import { Contact } from './pages/contact/Contact';
 import { LandingPage } from './pages/landing-page/LandingPage';
 import { Header } from './pages/header/Header';
-import { BookingForm } from './pages/booking-form/BookingForm';
+import { BookingForm } from './pages/booking-form/BookingFormCopy';
 import { Gdpr } from './pages/gdpr/Gdpr';
 
 function App() {
