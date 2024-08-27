@@ -5,6 +5,7 @@ import './BookingForm.css';
 import services from '../../assets/services.json';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { cs } from 'date-fns/locale'; // Import Czech locale for Monday as the first day
+import { set } from 'react-datepicker/dist/date_utils';
 
 registerLocale('cs', cs);
 
@@ -60,6 +61,27 @@ export const BookingForm = () => {
     '17:00',
     '17:30',
   ]);
+
+  const generateNewId = (): number => {
+    debugger;
+    // Získáme poslední ID z localStorage
+    let lastId = parseInt(localStorage.getItem('lastId') || '0', 10);    
+  
+    // Pokud v localStorage není ID, začneme od 0
+    if (isNaN(lastId)) {
+      lastId = 0;
+    }
+  
+    // Nové ID je o 1 vyšší než poslední ID
+    const newId = lastId + 1;
+  
+    // Uložíme nové ID zpět do localStorage
+    localStorage.setItem('lastId', newId.toString());
+
+    console.log(`Generated new ID: ${newId}`); // Debugging log
+  
+    return newId;
+  };
 
   const startDate = new Date();
   const [selectedDuration, setSelectedDuration] = useState<number | null>(null); // null, 30 or 60
@@ -176,7 +198,7 @@ export const BookingForm = () => {
 
       if (isTelephoneValid && isEmailValid) {
         const formattedData = {
-          id: id,
+          id: generateNewId(),
           name: inputData.name.trim(),
           surname: inputData.surname.trim(),
           email: inputData.email.trim(),
@@ -200,9 +222,11 @@ export const BookingForm = () => {
     if (checkedInputData) {
       const postNewBooking = async () => {
         try {
-          if (checkedInputData) {
+          if (checkedInputData && checkedInputData.id) {
             //změnit na uložení do localStorage
-            localStorage.setItem('booking2', JSON.stringify(checkedInputData));
+            const bookingKey = `booking${checkedInputData.id}`
+            localStorage.setItem(bookingKey, JSON.stringify(checkedInputData));
+            console.log(`Data saved to localStorage with key ${bookingKey}:`, checkedInputData); // Debugging log
             setShowModal(true);
             setFormSubmitted(true);
           }
@@ -231,23 +255,42 @@ export const BookingForm = () => {
     }
   }, [checkedInputData]);
 
-  useEffect(() => {
-    const booking1 = localStorage.getItem('booking1');
-    const booking2 = localStorage.getItem('booking2');
+  // useEffect(() => {
+  //   const booking1 = localStorage.getItem('booking1');
+  //   const booking2 = localStorage.getItem('booking2');
 
-    if (booking1) {
-      // Parse the JSON string back to an object
-      const submittedBooking1 = JSON.parse(booking1);
+  //   if (booking1) {
+  //     // Parse the JSON string back to an object
+  //     const submittedBooking1 = JSON.parse(booking1);
 
-      console.log('Booking submitted: ', submittedBooking1);
-    }
-    if (booking2) {
-      // Parse the JSON string back to an object
-      const submittedBooking2 = JSON.parse(booking2);
+  //     console.log('Booking submitted: ', submittedBooking1);
+  //   }
+  //   if (booking2) {
+  //     // Parse the JSON string back to an object
+  //     const submittedBooking2 = JSON.parse(booking2);
 
-      console.log('Booking submitted: ', submittedBooking2);
-    }
-  }, [localStorage]);
+  //     console.log('Booking submitted: ', submittedBooking2);
+  //   }
+  // }, [formSubmitted]);
+
+  // useEffect(() => {
+  //   console.log('formSubmitted changed:', formSubmitted); // Debugging log
+  //   const keys = Object.keys(localStorage).filter(key => key.startsWith('booking'));
+
+  //   keys.forEach(key => {
+  //     const booking = localStorage.getItem(key);
+  //     if (booking) {
+  //       const parsedBooking = JSON.parse(booking);
+  //       // console.log(`Booking retrieved for key ${key}:`, parsedBooking);
+  //     }
+  //   });
+  // }, [formSubmitted]);
+
+
+  // useEffect(() => {
+  //   localStorage.clear()
+  // }, [])
+
 
   return (
     <Container className='mt-5 form-container'>
