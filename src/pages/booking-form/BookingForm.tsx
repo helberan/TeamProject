@@ -38,7 +38,7 @@ export const BookingForm = () => {
   const [telephoneError, setTelephoneError] = useState<boolean>(false);
   const [emailError, setEmailError] = useState<boolean>(false);
   const [durationError, setDurationError] = useState<boolean>(false);
-  const [formSubmitted, setFormSubmitted] = useState<boolean>(false); //smazat?
+  const [formSubmitted, setFormSubmitted] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [availableHours, setAvailableHours] = useState([
     '09:00',
@@ -61,10 +61,11 @@ export const BookingForm = () => {
     '17:30',
   ]);
 
-  const startDate = new Date();
+  const startDate = new Date(); //SMAZAT?
   const [selectedDuration, setSelectedDuration] = useState<number | null>(null); // null, 30 or 60
   const [isEntranceExam, setIsEntranceExam] = useState<boolean>(false); // Track if service is "Vstupní vyšetření"
 
+  //handle date input change
   const handleDateChange = (date: Date | null) => {
     if (date) {
       setInputData((prevData) => ({
@@ -74,11 +75,13 @@ export const BookingForm = () => {
     }
   };
 
+  //check if it is a week day or not
   const isWeekday = (date: Date) => {
     const day = date.getDay();
     return day !== 0 && day !== 6;
   };
 
+  //handle input fields changes
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setInputData((prevData) => ({ ...prevData, [name]: value }));
@@ -91,8 +94,8 @@ export const BookingForm = () => {
     }
   };
 
+  //handle duration input selection - 30 or 60 minutes
   const handleDurationSelection = (duration: number) => {
-    //debugger;
     if (isEntranceExam && duration !== 60) {
       return;
     }
@@ -140,6 +143,7 @@ export const BookingForm = () => {
     setDurationError(false);
   };
 
+  //form submit
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!selectedDuration) {
@@ -155,45 +159,50 @@ export const BookingForm = () => {
   };
 
   const checkAvailabilityAndSubmit = async () => {
+    debugger;
     try {
       let checkedTelephone = inputData.telephone.trim().replace(/\s+/g, '');
       let checkedEmail = isValidEmail(inputData.email.trim());
 
       //změnit id + podmínka - když je localStorage prázdné, bude id automaticky např. 0
-      let id = 0;
       /*if (localStorage.getItem('0') === undefined) {
         id += 1;
       } else () */
 
-      //ověřit zobrazování errorů
+      let booking2 = localStorage.getItem('booking2');
+      if (booking2) {
+        let parsedBooking2 = JSON.parse(booking2);
+        let lastId = parsedBooking2.id;
 
-      const isTelephoneValid =
-        !isNaN(parseInt(checkedTelephone)) && checkedTelephone.length === 9;
-      const isEmailValid = checkedEmail;
+        const isTelephoneValid =
+          !isNaN(parseInt(checkedTelephone)) && checkedTelephone.length === 9;
+        const isEmailValid = checkedEmail;
 
-      setTelephoneError(!isTelephoneValid);
-      setEmailError(!isEmailValid);
+        setTelephoneError(!isTelephoneValid);
+        setEmailError(!isEmailValid);
 
-      if (isTelephoneValid && isEmailValid) {
-        const formattedData = {
-          id: id,
-          name: inputData.name.trim(),
-          surname: inputData.surname.trim(),
-          email: inputData.email.trim(),
-          telephone: checkedTelephone,
-          service: inputData.service.trim(),
-          date: inputData.date.trim(),
-          time: inputData.time.trim(),
-          duration: selectedDuration,
-        };
+        if (isTelephoneValid && isEmailValid) {
+          const formattedData = {
+            id: lastId + 1,
+            name: inputData.name.trim(),
+            surname: inputData.surname.trim(),
+            email: inputData.email.trim(),
+            telephone: checkedTelephone,
+            service: inputData.service.trim(),
+            date: inputData.date.trim(),
+            time: inputData.time.trim(),
+            duration: selectedDuration,
+          };
 
-        setTelephoneError(false);
-        setEmailError(false);
-        setCheckedInputData(formattedData);
+          setTelephoneError(false);
+          setEmailError(false);
+          setCheckedInputData(formattedData);
+        }
       }
     } catch (err) {
       console.error(err);
     }
+
   };
 
   useEffect(() => {
@@ -201,7 +210,6 @@ export const BookingForm = () => {
       const postNewBooking = async () => {
         try {
           if (checkedInputData) {
-            //změnit na uložení do localStorage
             localStorage.setItem('booking2', JSON.stringify(checkedInputData));
             setShowModal(true);
             setFormSubmitted(true);
@@ -231,23 +239,19 @@ export const BookingForm = () => {
     }
   }, [checkedInputData]);
 
+  /* useEffect(() => {
+    localStorage.clear();
+  }, []); */
+
   useEffect(() => {
-    const booking1 = localStorage.getItem('booking1');
     const booking2 = localStorage.getItem('booking2');
-
-    if (booking1) {
-      // Parse the JSON string back to an object
-      const submittedBooking1 = JSON.parse(booking1);
-
-      console.log('Booking submitted: ', submittedBooking1);
-    }
     if (booking2) {
       // Parse the JSON string back to an object
       const submittedBooking2 = JSON.parse(booking2);
 
       console.log('Booking submitted: ', submittedBooking2);
     }
-  }, [localStorage]);
+  }, [formSubmitted]);
 
   return (
     <Container className='mt-5 form-container'>
