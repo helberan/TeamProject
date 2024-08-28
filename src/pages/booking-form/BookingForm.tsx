@@ -5,7 +5,6 @@ import './BookingForm.css';
 import services from '../../assets/services.json';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { cs } from 'date-fns/locale'; // Import Czech locale for Monday as the first day
-import { set } from 'react-datepicker/dist/date_utils';
 
 registerLocale('cs', cs);
 
@@ -63,7 +62,6 @@ export const BookingForm = () => {
   ]);
 
   const generateNewId = (): number => {
-    debugger;
     // Získáme poslední ID z localStorage
     let lastId = parseInt(localStorage.getItem('lastId') || '0', 10);    
   
@@ -83,7 +81,7 @@ export const BookingForm = () => {
     return newId;
   };
 
-  const startDate = new Date();
+  // const startDate = new Date();
   const [selectedDuration, setSelectedDuration] = useState<number | null>(null); // null, 30 or 60
   const [isEntranceExam, setIsEntranceExam] = useState<boolean>(false); // Track if service is "Vstupní vyšetření"
 
@@ -182,7 +180,7 @@ export const BookingForm = () => {
       let checkedEmail = isValidEmail(inputData.email.trim());
 
       //změnit id + podmínka - když je localStorage prázdné, bude id automaticky např. 0
-      let id = 0;
+      // let id = 0;
       /*if (localStorage.getItem('0') === undefined) {
         id += 1;
       } else () */
