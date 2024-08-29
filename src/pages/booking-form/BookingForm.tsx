@@ -62,10 +62,10 @@ export const BookingForm = () => {
   ]);
 
   const generateNewId = (): number => {
-    // Získáme poslední ID z localStorage
+    // poslední ID z localStorage - pokud není, lastId = 0
     let lastId = parseInt(localStorage.getItem('lastId') || '0', 10);    
   
-    // Pokud v localStorage není ID, začneme od 0
+    // pokud v localStorage je lastId, ale není to číslo (např. '0008'), lastId = 0
     if (isNaN(lastId)) {
       lastId = 0;
     }
@@ -112,7 +112,6 @@ export const BookingForm = () => {
   };
 
   const handleDurationSelection = (duration: number) => {
-    //debugger;
     if (isEntranceExam && duration !== 60) {
       return;
     }
@@ -179,14 +178,6 @@ export const BookingForm = () => {
       let checkedTelephone = inputData.telephone.trim().replace(/\s+/g, '');
       let checkedEmail = isValidEmail(inputData.email.trim());
 
-      //změnit id + podmínka - když je localStorage prázdné, bude id automaticky např. 0
-      // let id = 0;
-      /*if (localStorage.getItem('0') === undefined) {
-        id += 1;
-      } else () */
-
-      //ověřit zobrazování errorů
-
       const isTelephoneValid =
         !isNaN(parseInt(checkedTelephone)) && checkedTelephone.length === 9;
       const isEmailValid = checkedEmail;
@@ -221,8 +212,7 @@ export const BookingForm = () => {
       const postNewBooking = async () => {
         try {
           if (checkedInputData && checkedInputData.id) {
-            //změnit na uložení do localStorage
-            const bookingKey = `booking${checkedInputData.id}`
+            const bookingKey = `booking${checkedInputData.id}`;
             localStorage.setItem(bookingKey, JSON.stringify(checkedInputData));
             console.log(`Data saved to localStorage with key ${bookingKey}:`, checkedInputData); // Debugging log
             setShowModal(true);
@@ -253,37 +243,6 @@ export const BookingForm = () => {
     }
   }, [checkedInputData]);
 
-  // useEffect(() => {
-  //   const booking1 = localStorage.getItem('booking1');
-  //   const booking2 = localStorage.getItem('booking2');
-
-  //   if (booking1) {
-  //     // Parse the JSON string back to an object
-  //     const submittedBooking1 = JSON.parse(booking1);
-
-  //     console.log('Booking submitted: ', submittedBooking1);
-  //   }
-  //   if (booking2) {
-  //     // Parse the JSON string back to an object
-  //     const submittedBooking2 = JSON.parse(booking2);
-
-  //     console.log('Booking submitted: ', submittedBooking2);
-  //   }
-  // }, [formSubmitted]);
-
-  // useEffect(() => {
-  //   console.log('formSubmitted changed:', formSubmitted); // Debugging log
-  //   const keys = Object.keys(localStorage).filter(key => key.startsWith('booking'));
-
-  //   keys.forEach(key => {
-  //     const booking = localStorage.getItem(key);
-  //     if (booking) {
-  //       const parsedBooking = JSON.parse(booking);
-  //       // console.log(`Booking retrieved for key ${key}:`, parsedBooking);
-  //     }
-  //   });
-  // }, [formSubmitted]);
-
 
   // useEffect(() => {
   //   localStorage.clear()
@@ -292,10 +251,6 @@ export const BookingForm = () => {
 
   return (
     <Container className='mt-5 form-container'>
-      {/*localStorage.getItem('formSubmitted') && (
-        <div className='info-message'>Formulář byl úspěšně odeslán!</div>
-      )*/}
-
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Rezervace potvrzena</Modal.Title>
